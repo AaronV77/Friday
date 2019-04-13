@@ -1,0 +1,48 @@
+Want to add / change:
+
+- Implement the clear command for the system.
+- Want to change all incoming characters to lowercase.
+
+- Be able to read the shiftL, shiftR, ctrl, option, and tab.
+    - I am able to read these keys but I don't know when for shift and ctrl
+      are finished being pressed.  I need to figure out a way to be able to tell
+      when the keys are done being pressed. This also goes for all characters
+      that are created by using shift.
+
+- Be able to read the caps, arrow keys when they are being pressed.
+    - There is a problem being able to read these keys becasue there is nothing
+      coming through the interrupt for the key. 
+
+- Rework the structure in the boot folder.  - DONE (2/25/2019)
+- Remove support for long mode. - DONE (2/25/2019)
+- Update all comments. - DONE (2/26/2019)
+- Fix the backspace component so that it updates the screen.
+    - Should rename the append and backspace functions to truncate and concate 
+      in the string library.  How I fixed this was by figuring out how the system
+      was printing to the screen, printed a space rather than the dot the original
+      designer put, and then adjusted the cursor back one more character. I also 
+      had to put a bounds so that the user didn't delete the prompt and everything
+      else off the screen. - DONE (2/26/2019)
+
+- Add linking file to system.
+    - I looked into creating a linking script for this project but would need
+      to redo the make file so that all the assembly .o files were in the current
+      directory as the linking script. I don't find this necessary right now for
+      this to be done. (2/26/2019)
+
+
+Realistic Goals:
+- Be able to fully support 64-bit Long Mode.
+- Implement a simple Malloc() and Free().
+- Implement a simple ls command.
+- Implement a simple cd command.
+- Implement a simple wget commmand.
+- Figure out debugging tools for OS Development.
+- Create a diagram from real mode to protected mode.
+ 
+Ultimate Goals:
+- Implement a text editor.
+- Implement Processes.
+- Implement a PS command.
+- Implement Page Swapping.
+- Figure out how to start using glibc.

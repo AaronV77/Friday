@@ -1,0 +1,23 @@
+1. What does the Global Descriptor Table actually do?
+3. Creating variables in C puts them where in memory?
+4. What uses the stack and heap?
+2. What does the e801 do?
+5. How to create a bitmap of memory?
+
+6. How to create a file in x86 assembly?
+7. How to print the directory contents in x86 assembly?
+    - https://wiki.osdev.org/Ext2
+    - https://github.com/gkostka/lwext4
+
+8. How to create a proper operating system structure (directory related)?
+    - Would not worry about this until you are able to actually see the 
+      the file structure.
+
+9. What are syscalls and how do they work in the kernel?
+    - I wouldn't worry about this until we actually have users. 
+
+- Things to do.
+    - Get the memory in order.
+    - Get the heap ready.
+    - Get the concept of processes working.
+    - Get the filesystem in order. 
