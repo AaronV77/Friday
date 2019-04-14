@@ -28,7 +28,7 @@ clean:
 
 # Make a 1.44MiB disk image. Can work for HDA and FDA booting
 os-image.bin: kernel/kernel.bin boot/boot.bin
-	dd if=/dev/zero of=$@ bs=1024 count=1440
+	dd if=/dev/zero of=$@ bs=512 count=1440
 	dd if=$(word 2,$^) of=$@ conv=notrunc
 
 boot/boot.bin: boot/boot.asm

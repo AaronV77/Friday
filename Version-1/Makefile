@@ -1,6 +1,7 @@
-SOURCES = $(shell find cpu drivers include kernel libc -name '*.c')
-HEADERS = $(shell find cpu drivers include kernel libc -name '*.h')
-OBJ = ${SOURCES:.c=.o cpu/interrupt.o}
+SOURCES  = $(shell find cpu drivers include kernel libc -name '*.c')
+KERN_ASM = $(shell find cpu drivers include kernel libc -name '*.asm')
+HEADERS  = $(shell find cpu drivers include kernel libc -name '*.h')
+OBJ	= ${SOURCES:.c=.o} ${KERN_ASM:.asm=.o}
 
 ASM = nasm
 CC = gcc 
@@ -19,6 +20,7 @@ run: all
 
 clean:
 	rm -rf *.dis *.o *.elf
+	rm -rf kernel/*.elf	
 	rm -rf *.bin os-image.bin boot/*.bin kernel/*.bin
 	rm -rf boot/*.o cpu/*.o drivers/*.o kernel/*.o libc/*.o
 
@@ -29,10 +31,7 @@ boot/boot.bin: boot/boot.asm
 	${ASM} $< -f bin -o $@
 
 kernel/kernel.bin: boot/kernel_entry.o ${OBJ}
-	${LD} -o $@ -Tlinker.ld $^
-
-# ${LD} -o $@ -Tlinker.ld $^
-# ${LD} -o $@ -Ttext 0x1000 $^ --oformat binary
+	${LD} -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} -c $< -o $@

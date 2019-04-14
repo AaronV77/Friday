@@ -11,6 +11,7 @@
 #include "../kernel/kernel.h"
 
 int SHIFT = 0;
+int CAPS = 0;
 
 static char key_buffer[256];
 
@@ -317,7 +318,8 @@ static void keyboard_callback(registers_t regs) {
       break;      
     case 0x1C:
       // ENTER
-      print("\n");
+      str[0] = '\n';
+      str[1] = '\0';
       user_input(key_buffer);
       key_buffer[0] = '\0';
       break;
@@ -590,16 +592,11 @@ static void keyboard_callback(registers_t regs) {
       break;
     case 0x39:
       // SPACE
-      str[0] = ' ';
-      str[1] = '\0';
-      print_switch = 1;
+      print(" ");
       break;
     case 0x3A:
       // CAPS
-      if (SHIFT == 0)
-        SHIFT = 1;
-      else
-        SHIFT = 0;
+      SHIFT = 1;
       break; 
     case 0xAA:
       // Left SHIFT Released
@@ -611,7 +608,7 @@ static void keyboard_callback(registers_t regs) {
       break;   
     case 0xBA:
       // CAPS Released
-      // SHIFT = 0;    
+      SHIFT = 0;    
       break;                                                                                          
     default:
       break;

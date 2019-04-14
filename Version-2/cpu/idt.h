@@ -4,7 +4,8 @@
 #define KERNEL_CS 0x08
 
 // Entries count in Interrupt Descriptor Table
-#define IDT_ENTRIES 256
+// There is 0 - 255 gates in the IDT.
+#define IDT_ENTRIES 256 
 
 /*
  * Structure for storing Gate entry

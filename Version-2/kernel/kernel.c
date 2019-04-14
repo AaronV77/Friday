@@ -8,7 +8,6 @@
 #include "../libc/mem.h"
 #include "../libc/string.h"
 #include "../drivers/screen.h"
-#include "../drivers/ata.h"
 
 extern int kernel_start;
 int starting_address = (int)&kernel_start;
@@ -28,8 +27,6 @@ void kernel_main() {
 
   heap_install(starting_address, ending_address);
   // paging_install();
-  device_init();
-  ata_init();
 
   print("Kernel Starting Address: ");
   print_number(starting_address);

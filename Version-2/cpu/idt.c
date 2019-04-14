@@ -22,13 +22,11 @@ void set_idt_gate(int n, uint32_t handler) {
 /*
  * This function will set the base address of where the Interrupt
  * - Descriptor Table starts and then the length of the table as 
- * - well. Then we will allow the lidtl command to point to where
- * - it is located. ** HELP ** I could not find anything with the
- * - following command "lidtl" I think this is a miss type and is
- * - meant to be lidt. This needs to be tested.
+ * - well. Then we will call the lidtl command to point to where
+ * - it is located in memory.
  */
 void set_idt() {
   idt_reg.base = (uint32_t)&idt;
   idt_reg.limit = IDT_ENTRIES * sizeof(idt_gate_t) - 1;
-  __asm__ __volatile__("lidt (%0)" : : "r" (&idt_reg));   // <--- This line was changed from lidtl to lidt.
+  __asm__ __volatile__("lidt (%0)" : : "r" (&idt_reg));
 }
