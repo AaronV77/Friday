@@ -13,9 +13,10 @@ disk_read:
 	mov ah, 0x02								; Call the subroutine for reading sectors.
 	mov al, dh									; Give the ALU register how many sectors we will be reading in.
 	mov ch, 0x00								; Load the cylinder number in.
-	mov dh, 0x00								; Load in the head number in.
 	mov cl, 0x02								; Give the starting sector number to read from. We use the second sector because the first
-												; - one was our MBR.
+												; - one was our MBR.	
+	mov dh, 0x00								; Load in the head number in.
+
 	int 0x13									; Call the interupt INT 13 / AH = 02 to read the sectors from the disk and put into memory.
 
 	jc disk_read_error							; If the carry flag is set because of an error, then go to the disk_read_error procedure.
