@@ -23,7 +23,7 @@ jmp $								; Loop infinitely if we come back from the previous procedure.
 
 load_kernel_into_memory:
 	pusha							; Store all the general purpose registers (edi,esi,ebp,esp,ebx,edx,ecx,eax).
-	mov bx, KERNEL_OFFSET			; Store the address of the kernel into our GDT I believe not entirely sure. *** HELP ***
+	mov bx, KERNEL_OFFSET			; Store the location of where we want to load our sectors into memory.
 	mov dh, 33						; Read 15 (512 bytes) sectors from the disk. 
 	mov dl, [BOOT_DRIVE]			; Move the disk number into the dl register.
 	call disk_read					; Call the procdeure to read the sectors from the disk.
