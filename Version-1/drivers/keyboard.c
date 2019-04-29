@@ -317,7 +317,7 @@ static void keyboard_callback(registers_t regs) {
       break;      
     case 0x1C:
       // ENTER
-      print("\n");
+      kprintf("\n");
       user_input(key_buffer);
       key_buffer[0] = '\0';
       break;
@@ -619,7 +619,7 @@ static void keyboard_callback(registers_t regs) {
   
   if (print_switch == 1) {
     concate_character(key_buffer, str[0]);
-    print(str);
+    kprintf(str);
   }
 
   UNUSED(regs);

@@ -17,7 +17,7 @@
 #define REG_SCREEN_DATA 0x3D5
 
 // Public API
-void print(char *message);
-void print_at(char *message, int col, int row);
+int kprintf (const char* str, ...);
+void print_at(char message, int col, int row);
 void print_backspace();
 void clear_screen();

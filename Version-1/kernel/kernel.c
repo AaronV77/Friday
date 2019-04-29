@@ -20,9 +20,9 @@ void kernel_main() {
   isr_install();
   irq_install();
   // paging_install();
-
-  print("Type something, it will go through the kernel\n");
-  print("Type END to halt the CPU\n> ");
+  kprintf("Does this show: %d\n", 0x1000);
+  kprintf("Type something, it will go through the kernel\n");
+  kprintf("Type END to halt the CPU\n> ");
 }
 
 /*
@@ -32,12 +32,14 @@ void kernel_main() {
  * - was entered back to the user.
  */
 void user_input(char *input) {
-  if (strcmp(input, "END") == 0 || strcmp(input, "QUIT") == 0 || strcmp(input, "EXIT") == 0) {
-    print("Stopping the CPU. Bye!\n");
+  if (!strcmp(input, "end") || !strcmp(input, "quit") || !strcmp(input, "exit")) {
+    kprintf("Stopping the CPU. Bye!\n");
     __asm__ __volatile__("hlt");
+  } else if (!strcmp(input, "clear")) {
+    clear_screen();
+  } else {
+    kprintf("You said: ");
+    kprintf(input);
   }
-
-  print("You said: ");
-  print(input);
-  print("\n> ");
+  kprintf("\n> ");
 }

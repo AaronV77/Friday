@@ -37,7 +37,7 @@ void itoa(int number, char str[]) {
  * This function loops through an entire string, incrementing the iterator
  * - until the end of the string is reached. The value afterwards is returned.
  */
-int strlen(char s[]) {
+int strlen(const char s[]) {
   int i = 0;
   while (s[i] != '\0') ++i;
   return i;

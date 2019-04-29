@@ -16,8 +16,25 @@
 9. What are syscalls and how do they work in the kernel?
     - I wouldn't worry about this until we actually have users. 
 
-- Things to do.
-    - Get the memory in order.
-    - Get the heap ready.
-    - Get the concept of processes working.
-    - Get the filesystem in order. 
+
+1. What is the SECTIONS in the linker script?
+	- The SECTIONS in the linker script is a command to describe the memory layout of the output file.
+	Where I got the answer: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Using_ld_the_GNU_Linker/simple-example.html
+
+2. What is the .text, .data, and .bss in the linker script?
+	- .text is for code.
+	- .data is for initialized data.
+	- .bss is for uninitialized data.
+	- The '.' is a special symbol which is a location counter.
+	Where I got the answer: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Using_ld_the_GNU_Linker/simple-example.html
+
+
+
+- I don't know how or why my image is being 1.44 MiB.
+- I don't know why the tail end of my kernel is at the 1 Megabyte mark.
+- I don't know what cross compilers do.
+- How do I move my kernel to the one megabyte mark.
+- How dynamically load n number of hard drive sectors for how big our kernel is.
+- How do you know, how big of an image to create for all of our files.
+	- I am going to use the kernel.bin size to justify my size and plus some.
+- Where does the harddrive sectors get read into?
