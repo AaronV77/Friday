@@ -15,7 +15,7 @@ endif
 
 all: os-image.bin
 
-run: all
+run: clean all
 	qemu-system-i386 os-image.bin
 
 clean:
