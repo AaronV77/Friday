@@ -1,5 +1,19 @@
 #include "mem.h"
 
+int starting_address;
+int ending_address;
+int max_memory_address;
+int total_elements;
+
+struct heap_elements {
+    int start_address;
+    int end_address;
+    int size;
+    int reservation;
+};
+
+struct heap_elements heap[25];
+
 // Write len copies of val into dest.
 void memset(int *dest, int val, int len)
 {
@@ -11,45 +25,78 @@ void memset(int *dest, int val, int len)
  * This function will take a source and destination and copy n amount
  * - of bytes from the source to the destination address. 
  */ 
-void memory_copy(uint8_t *source, uint8_t *destination, int bytes) {
-  for (int i = 0; i < bytes; i++) {
-    *(destination + i) = *(source + i);
-  }
+void memory_copy(unsigned char *source, unsigned char *destination, int bytes) {
+    for (int i = 0; i < bytes; i++) {
+        *(destination + i) = *(source + i);
+    }
 }
 
-// end is defined in the linker script.
-// extern int end;
-// int placement_address = (int)&end;
-// extern page_directory_t *kernel_directory;
-// heap_t *kheap=0;
+void * malloc(int size) {   
+    int hole = find_memory_hole(size);
+    if (hole != -1) {
+        if (heap[hole].start_address == 0) {
+            heap[hole].start_address = ending_address;
+            ending_address += size;
+            heap[hole].end_address = ending_address;
+            heap[hole].size = size;
+            heap[hole].reservation = 1;
+        } else {
+            heap[hole].size = size;
+            heap[hole].reservation = 1;
+        }
+        return (void*)heap[hole].start_address;
+    } else {
+        kprintf("FREE SOME MEMORY~!\n");
+        kprintf("WE NEED ROOM IN HERE~!\n");
+        return 0;
+    }
+}
 
-// int kmalloc(int sz, int align, int *phys)
-// {
-//     // if (kheap != 0)
-//     // {
-//     //     void *addr = alloc(sz, (u8int)align, kheap);
-//     //     if (phys != 0)
-//     //     {
-//     //         page_t *page = get_page((u32int)addr, 0, kernel_directory);
-//     //         *phys = page->frame*0x1000 + ((u32int)addr&0xFFF);
-//     //     }
-//     //     return (u32int)addr;
-//     // }
-//     // else
-//     // {
-//         if (align == 1 && (placement_address & 0xFFFFF000) )
-//         {
-//             // Align the placement address;
-//             placement_address &= 0xFFFFF000;
-//             placement_address += 0x1000;
-//         }
-//         if (phys)
-//         {
-//             *phys = placement_address;
-//         }
-//         int tmp = placement_address;
-//         placement_address += sz;
-//         return tmp;
-//     // }
-// }
+void heap_install() {
+    total_elements = 25;
+    starting_address = 0x100000;  // 1 - MB
+    ending_address = 0x100000;    // 1 - MB
+    max_memory_address = 0xEEE00000;  // 4 - GB
 
+    for (int i = 0; i < total_elements; i++) {
+        heap[i].start_address = 0;
+        heap[i].end_address = 0;
+        heap[i].size = 0;
+        heap[i].reservation = 0;
+    }
+
+    return;
+}
+
+int find_memory_hole(int size) {
+
+    for (int i = 0; i < total_elements; i++) {
+        if (heap[i].reservation == 0) {
+            if (heap[i].size >= size || heap[i].size == 0) {
+              return i;
+            }
+        }
+    }
+    return -1;
+}
+
+void free(int * pointer) {
+
+    int memory_found = 0;
+    int memory_address = (int)pointer;
+    
+    for (int i = 0; i < total_elements; i++) {
+        if (heap[i].start_address == memory_address) {
+            heap[i].size = 0;
+            heap[i].reservation = 0;
+            memory_found = 1;
+            break;
+        }
+    }
+
+    if (memory_found == 0) {
+        kprintf("Memory could not bee free'd (NOT FOUND).\n");
+    }
+
+    return;
+}

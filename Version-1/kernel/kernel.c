@@ -19,8 +19,8 @@ void kernel_main() {
   clear_screen();
   isr_install();
   irq_install();
-  // paging_install();
-  kprintf("Does this show: %d\n", 0x1000);
+  paging_install();
+
   kprintf("Type something, it will go through the kernel\n");
   kprintf("Type END to halt the CPU\n> ");
 }
