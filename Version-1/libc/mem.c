@@ -31,7 +31,19 @@ void memory_copy(unsigned char *source, unsigned char *destination, int bytes) {
     }
 }
 
-void * malloc(int size) {   
+int find_memory_hole(int size) {
+
+    for (int i = 0; i < total_elements; i++) {
+        if (heap[i].reservation == 0) {
+            if (heap[i].size >= size || heap[i].size == 0) {
+              return i;
+            }
+        }
+    }
+    return -1;
+}
+
+int * malloc(int size) {   
     int hole = find_memory_hole(size);
     if (hole != -1) {
         if (heap[hole].start_address == 0) {
@@ -40,11 +52,14 @@ void * malloc(int size) {
             heap[hole].end_address = ending_address;
             heap[hole].size = size;
             heap[hole].reservation = 1;
+            kprintf("Starting address: %d\n", heap[hole].start_address);
+            kprintf("Ending address: %d\n", heap[hole].end_address);
         } else {
             heap[hole].size = size;
             heap[hole].reservation = 1;
         }
-        return (void*)heap[hole].start_address;
+        memset((int*)heap[hole].start_address, 0, size);
+        return (int*)heap[hole].start_address;
     } else {
         kprintf("FREE SOME MEMORY~!\n");
         kprintf("WE NEED ROOM IN HERE~!\n");
@@ -68,22 +83,11 @@ void heap_install() {
     return;
 }
 
-int find_memory_hole(int size) {
-
-    for (int i = 0; i < total_elements; i++) {
-        if (heap[i].reservation == 0) {
-            if (heap[i].size >= size || heap[i].size == 0) {
-              return i;
-            }
-        }
-    }
-    return -1;
-}
-
-void free(int * pointer) {
+void free(void * pointer) {
 
     int memory_found = 0;
-    int memory_address = (int)pointer;
+    kprintf("Address %d\n", &pointer);
+    int memory_address = &pointer;
     
     for (int i = 0; i < total_elements; i++) {
         if (heap[i].start_address == memory_address) {
@@ -94,9 +98,8 @@ void free(int * pointer) {
         }
     }
 
-    if (memory_found == 0) {
+    if (memory_found == 0)
         kprintf("Memory could not bee free'd (NOT FOUND).\n");
-    }
 
     return;
 }

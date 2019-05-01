@@ -73,3 +73,11 @@ int strcmp(char s1[], char s2[]) {
   }
   return s1[i] - s2[i];
 }
+
+int strcpy(char s1[], char s2[]) {
+  s1[0] = '\0';
+  for (int i = 0; i < strlen(s2); ++i) {
+    s1[i] = s2[i];
+  }
+  return 0;
+}
