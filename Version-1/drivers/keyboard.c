@@ -6,11 +6,14 @@
 #include "screen.h"
 #include "../cpu/ports.h"
 #include "../cpu/isr.h"
-#include "../libc/function.h"
+#include "../libc/mem.h"
 #include "../libc/string.h"
+#include "../libc/function.h"
 #include "../kernel/kernel.h"
 
 int SHIFT = 0;
+int start_grabbing_input = 0;
+int enter_has_been_pressed = 0;
 
 static char key_buffer[256];
 
@@ -29,6 +32,9 @@ static char key_buffer[256];
  * - for when a given key has been pressed and released.
  */
 static void keyboard_callback(registers_t regs) {
+  if (start_grabbing_input == 0)
+    return;
+
   uint8_t scancode = port_byte_in(0x60);
   
   char str[5];
@@ -317,9 +323,8 @@ static void keyboard_callback(registers_t regs) {
       break;      
     case 0x1C:
       // ENTER
-      kprintf("\n");
-      user_input(key_buffer);
-      key_buffer[0] = '\0';
+      str[0] = '\n';
+      enter_has_been_pressed = 1;
       break;
     case 0x1D:
       // LEFT CONTROL
@@ -618,13 +623,27 @@ static void keyboard_callback(registers_t regs) {
   };
   
   if (print_switch == 1) {
-    concate_character(key_buffer, str[0]);
+    for (int i = 0; i < strlen(str); ++i)
+      concate_character(key_buffer, str[i]);
     kprintf(str);
   }
 
   UNUSED(regs);
 }
 
+char * get_user_input() {
+  start_grabbing_input = 1;
+  while(1) {
+    if (enter_has_been_pressed == 1)
+      break;
+  }
+  char * buffer = (char*)malloc(strlen(key_buffer));
+  strcpy(buffer, key_buffer);
+  start_grabbing_input = 0;
+  enter_has_been_pressed = 0;
+  key_buffer[0] = '\0';
+  return buffer;
+}
 /*
  * This function will map the keyboard interrupt "IRQ1" to the
  * - keyboard_callback(). 
