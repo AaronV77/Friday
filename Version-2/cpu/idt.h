@@ -1,11 +1,13 @@
+#ifndef IDT_H
+#define IDT_H
+
 #include "../include/stdint.h"
 
 // Address of kernel code segment
 #define KERNEL_CS 0x08
 
 // Entries count in Interrupt Descriptor Table
-// There is 0 - 255 gates in the IDT.
-#define IDT_ENTRIES 256 
+#define IDT_ENTRIES 256
 
 /*
  * Structure for storing Gate entry
@@ -40,3 +42,5 @@ idt_register_t idt_reg;
 
 void set_idt_gate(int n, uint32_t handler);
 void set_idt();
+
+#endif

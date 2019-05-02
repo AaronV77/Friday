@@ -2,7 +2,7 @@ OUTPUT_FORMAT(elf32-i386)
 
 SECTIONS {
     . = 0x1000;
-	kernel_start = .;
+
     .text : SUBALIGN(4)
     {
         *(.text.entry)       /* Ensure .text.entry appears first */
@@ -25,5 +25,6 @@ SECTIONS {
         *(.eh_frame);
         *(.comment);
     }
-	kernel_end = .;
+
+    end = .; _end = .; __end = .;
 }

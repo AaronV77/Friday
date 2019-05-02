@@ -8,8 +8,9 @@
 [org 0x7C00]						; Sets the offset to which all absolute addresses will be relative to.
 [bits 16]							; Tell the assembler that we are in real mode (16-bit).
 
-KERNEL_OFFSET equ 0x1000			; Create a variable that will point to our kernel_entry file to start
+KERNEL_OFFSET_1 equ 0x1000			; Create a variable that will point to our kernel_entry file to start
 									; - running our kernel. This address is hard coded in the linking of the system.
+KERNEL_OFFSET_2 equ 0x4201
 mov [BOOT_DRIVE], dl				; Save the disk number if something changes the dl register.
 
 mov bp, 0x9000						; Create a stack that expands from 0x1000 to 0x9000 so that our kernel has some memory to use.
@@ -23,10 +24,16 @@ jmp $								; Loop infinitely if we come back from the previous procedure.
 
 load_kernel_into_memory:
 	pusha							; Store all the general purpose registers (edi,esi,ebp,esp,ebx,edx,ecx,eax).
-	mov bx, KERNEL_OFFSET			; Store the location of where we want to load our sectors into memory.
-	mov dh, 33						; Read 15 (512 bytes) sectors from the disk. 
+	mov bx, KERNEL_OFFSET_1			; Store the location of where we want to load our sectors into memory.
+	mov dh, 25
 	mov dl, [BOOT_DRIVE]			; Move the disk number into the dl register.
-	call disk_read					; Call the procdeure to read the sectors from the disk.
+	call disk_read_1				; Call the procdeure to read the sectors from the disk.
+	
+	mov bx, KERNEL_OFFSET_2			; Store the location of where we want to load our sectors into memory.
+	mov dh, 25
+	mov dl, [BOOT_DRIVE]			; Move the disk number into the dl register.
+	call disk_read_2				; Call the procdeure to read the sectors from the disk.
+
 	popa							; Restore all the previous general purpose registers (edi,esi,ebp,esp,ebx,edx,ecx,eax).
 	ret								; Exit this procedure.
 
@@ -37,7 +44,7 @@ begin_pm:
 	jmp $							; Loop infinitely if we come back from the previous procedure.
 
 execute_kernel:
-	call KERNEL_OFFSET				; Call the procedure at the 0x1000 address witch should be our kernel_entry "_start"
+	call KERNEL_OFFSET_1			; Call the procedure at the 0x1000 address witch should be our kernel_entry "_start"
 									; - procedure.
 	jmp $							; Loop infinitely if we come back from the previous procedure.
 

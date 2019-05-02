@@ -37,7 +37,7 @@ void itoa(int number, char str[]) {
  * This function loops through an entire string, incrementing the iterator
  * - until the end of the string is reached. The value afterwards is returned.
  */
-int strlen(char s[]) {
+int strlen(const char s[]) {
   int i = 0;
   while (s[i] != '\0') ++i;
   return i;
@@ -73,3 +73,39 @@ int strcmp(char s1[], char s2[]) {
   }
   return s1[i] - s2[i];
 }
+
+int strcpy(char s1[], char s2[]) {
+  s1[0] = '\0';
+  for (int i = 0; i < strlen(s2); ++i) {
+    s1[i] = s2[i];
+  }
+  return 0;
+}
+
+// char* strtok(char* s, char* delm)
+// {
+//     static int currIndex = 0;
+//     if(!s || !delm || s[currIndex] == '\0')
+//         return 0;
+        
+//     char *W = (char *)malloc(sizeof(char)*100);
+//     int i = currIndex, k = 0, j = 0;
+
+//     kprintf("The i number: %d\n", i);
+//     while (s[i] != '\0') {
+//         j = 0;
+//         while (delm[j] != '\0'){
+//             if (s[i] != delm[j])
+//                 W[k] = s[i];
+//             else 
+//               goto It;
+//             j++;
+//         }
+//         i++;
+//         k++;
+//     }
+// It:
+//     W[i] = 0;
+//     currIndex = i+1;
+//     return W;
+// }

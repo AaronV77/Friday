@@ -147,13 +147,9 @@ void isr_install() {
  */
 void isr_handler(registers_t r) {
   char s[3];
-
-  print("Received interrupt: ");
   itoa(r.int_no, s);
-  print(s);
-  print("\n");
-  print(exception_messages[r.int_no]);
-  print("\n");
+  kprintf("Received interrupt number: %s\n", s);
+  kprintf("Here is the message: %s\n", exception_messages[r.int_no]);
 }
 
 /*
