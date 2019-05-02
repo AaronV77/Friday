@@ -123,7 +123,7 @@ int print_char(char character, int column, int row, int attribute) {
     // In case, if we out of bounds
     // Copy each line to a line above
     for (int i = 1; i < MAX_ROWS; i++)
-      memory_copy((uint8_t*)(get_offset(0, i) + VIDEO_ADDRESS), (uint8_t*)(get_offset(0, i - 1) + VIDEO_ADDRESS), MAX_COLS * 2);
+      memcpy((uint8_t*)(get_offset(0, i) + VIDEO_ADDRESS), (uint8_t*)(get_offset(0, i - 1) + VIDEO_ADDRESS), MAX_COLS * 2);
 
     // Clear the last line after all lines were copied
     char* last_line = (char*)(get_offset(0, MAX_ROWS - 1) + VIDEO_ADDRESS);

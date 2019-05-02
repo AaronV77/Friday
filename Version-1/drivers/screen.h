@@ -1,3 +1,6 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include "../include/stdint.h"
 
 // Address in memory which is mapped to video
@@ -21,3 +24,5 @@ int kprintf (const char* str, ...);
 void print_at(char message, int col, int row);
 void print_backspace();
 void clear_screen();
+
+#endif
