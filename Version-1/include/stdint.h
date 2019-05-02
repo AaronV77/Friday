@@ -4,6 +4,9 @@
  * - all variables will ((signed, unsigned, long) short, int, double, char)
  * - have the same name but are declared differently on the backend.
  */
+#ifndef _STD_
+#define _STD_
+
 typedef signed char int8_t;
 typedef unsigned char uint8_t;
 typedef short int16_t;
@@ -127,3 +130,5 @@ typedef unsigned long long uintmax_t;
 
 #define LOW_64(address) (uint64_t)((address) & 0xFFFFFFFFFFFFFFFF)
 #define HIGH_64(address) (uint64_t)(((address) >> 64) & 0xFFFFFFFFFFFFFFFF)
+
+#endif

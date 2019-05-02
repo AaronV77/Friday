@@ -1,3 +1,6 @@
+#ifndef IDT_H
+#define IDT_H
+
 #include "../include/stdint.h"
 
 // Address of kernel code segment
@@ -39,3 +42,5 @@ idt_register_t idt_reg;
 
 void set_idt_gate(int n, uint32_t handler);
 void set_idt();
+
+#endif

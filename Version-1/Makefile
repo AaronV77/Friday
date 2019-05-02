@@ -16,7 +16,7 @@ endif
 all: os-image.bin
 
 run: clean all
-	qemu-system-i386 os-image.bin
+	qemu-system-i386 -drive file=os-image.bin,index=0,media=disk,format=raw
 
 clean:
 	rm -rf *.dis *.o *.elf
