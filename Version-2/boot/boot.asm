@@ -1,7 +1,7 @@
 STAGE2_ABS_ADDR  equ 0x01000
 STAGE2_RUN_SEG   equ 0x0000
 STAGE2_RUN_OFS   equ STAGE2_ABS_ADDR
-                                ; Run stage2 with segment of 0x0000 and offset of 0x7e00
+                                ; Run stage2 with segment of 0x0000 and offset of 0x1000
 
 STAGE2_LOAD_SEG  equ STAGE2_ABS_ADDR>>4
                                 ; Segment to start reading Stage2 into
@@ -140,7 +140,7 @@ MSG_LOAD_KERNEL db "Loading kernel into memory", 0
 TIMES 510-($-$$) db  0
 dw 0xaa55
 
-; Beginning of stage2. This is at 0x7E00 and will allow your stage2 to be 32.5KiB
+; Beginning of stage2. This is at 0x1000 and will allow your stage2 to be 32.5KiB
 ; before running into problems. DL will be set to the drive number originally
 ; passed to us by the BIOS.
 
