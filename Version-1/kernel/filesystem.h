@@ -1,17 +1,19 @@
 
-#ifndef FILE_S_H
-#define FILE_S_H
+// #ifndef FILE_S_H
+// #define FILE_S_H
 
-#include "../libc/string.h"
-#include "../drivers/screen.h"
-#include "../drivers/keyboard.h"
+// #include "../libc/string.h"
+// #include "../drivers/screen.h"
+// #include "../drivers/keyboard.h"
 
-void create_file(char * filename);
+// void file_system_install();
 
-void display_file(char * filename);
+// void create_file(char * filename);
 
-// void edit_file();
+// void display_file(char * filename);
 
-void delete_file(char * filename);
+// // void edit_file();
 
-#endif
+// void delete_file(char * filename);
+
+// #endif
