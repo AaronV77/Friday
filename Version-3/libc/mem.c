@@ -16,7 +16,7 @@ struct heap_elements {
     int reservation;
 };
 
-struct heap_elements heap[20];
+struct heap_elements heap[50];
 
 void memset(int *dest, int val, int len) {
     int *temp = (int *)dest;

@@ -17,8 +17,7 @@ void kernel_main() {
   isr_install();
   irq_install();
   heap_install();
-  file_system_install();
-  
+
   kprintf("Type something, it will go through the kernel\n");
   kprintf("Type END to halt the CPU\n> ");
 

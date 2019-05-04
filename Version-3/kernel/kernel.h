@@ -2,7 +2,6 @@
 #define KERNEL_H
 
 #include "kernel.h"
-#include "file_system.h"
 
 #include "../libc/mem.h"
 #include "../libc/string.h"
