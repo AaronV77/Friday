@@ -1,0 +1,5 @@
+The things I fixed in the system:
+- Had to add the -fno-pie argument to the gcc compiling.
+- Had to add the -m elf_i386 to the linking part.
+- The make clean was not removing all unwanted files.
+- The backspace character was not working correctly so I made it work.
